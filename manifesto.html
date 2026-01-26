@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Manifesto | Groundskeeper Willie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Simpsonfont';
+            src: url('assets/Simpsonfont.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SolemnSojourn';
+            src: url('assets/SolemnSojourn.otf') format('opentype');
+        }
+
+        body {
+            background-color: #f5f2e8;
+            background-image: radial-gradient(#d4c5a9 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'SolemnSojourn', serif;
+        }
+
+        .simpsons-font {
+            font-family: 'Simpsonfont', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="p-8 max-w-3xl mx-auto text-gray-900">
+    <a href="index.html" class="mb-8 inline-block font-sans text-red-700 font-bold hover:underline">← BACK TO
+        DASHBOARD</a>
+
+    <header class="mb-12 text-center border-b-4 border-black pb-8">
+        <h1 class="text-5xl md:text-7xl font-black mb-4 simpsons-font tracking-widest text-[#b71c1c]">THE MANIFESTO</h1>
+        <p class="text-xl font-sans italic opacity-70">"Why we do what we do."</p>
+    </header>
+
+    <main class="space-y-8 text-xl leading-relaxed">
+        <section>
+            <h2 class="text-3xl font-bold mb-2">The Problem with Politeness</h2>
+            <p>Modern AI is too nice. It sees your terrible, insecure code and says: <em>"Here is a suggestion!"</em> It
+                does not want to hurt your feelings.</p>
+            <p><strong>This is a vulnerability.</strong> Your feelings do not matter. Your call stack matters.</p>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold mb-2">The Solution: Groundskeeper Willie</h2>
+            <p>We don't need help. We need a Groundskeeper. We need someone to look at our code and say:</p>
+            <blockquote class="border-l-4 border-red-700 pl-4 my-4 italic font-sans text-2xl text-red-800">
+                "ACH! MY EYES! THIS IS GARBAGE!"
+            </blockquote>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold mb-2">Our Core Tenets</h2>
+            <ul class="list-disc list-inside font-sans space-y-2">
+                <li><strong>Zero Tolerance:</strong> If it compiles but leaks memory, it is trash.</li>
+                <li><strong>Maximum Aggression:</strong> Insults stick in your memory better than advice.</li>
+                <li><strong>No "Ralphs":</strong> We do not glue macaroni to the server rack.</li>
+            </ul>
+        </section>
+
+        <footer class="mt-16 pt-8 border-t-2 border-gray-400 text-center">
+            <p class="font-sans font-bold">SIGNED,</p>
+            <p class="text-2xl mt-2 simpsons-font">Groundskeeper G. Willie</p>
+            <p class="text-sm font-sans opacity-60">(Certified Groundskeeper - The Willie Technique)</p>
+        </footer>
+    </main>
+</body>
+
+</html>
