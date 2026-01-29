@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED: The Willie Protocol | Groundskeeper Willie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @font-face {
+            font-family: 'SolemnSojourn';
+            src: url('assets/SolemnSojourn.otf') format('opentype');
+        }
+
+        :root {
+            --paper-bg: #fdfbf7;
+            --ink-color: #2a2a2a;
+            --red-ink: #c62828;
+            --stamp-opacity: 0.8;
+        }
+
+        body {
+            background-color: #e3decb;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZTNkZWNiIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wNSkiLz4KPC9zdmc+');
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--ink-color);
+            padding: 2rem;
+        }
+
+        .paper-sheet {
+            background-color: var(--paper-bg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem;
+            position: relative;
+            transform: rotate(-0.5deg);
+        }
+
+        .paper-sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(45deg,
+                    #c62828,
+                    #c62828 10px,
+                    #fdfbf7 10px,
+                    #fdfbf7 20px);
+        }
+
+        .stamp {
+            border: 4px solid var(--red-ink);
+            color: var(--red-ink);
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: 'SolemnSojourn', sans-serif;
+            letter-spacing: 2px;
+            transform: rotate(-10deg);
+            opacity: var(--stamp-opacity);
+            mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMS41IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iYmxhY2siLz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjUiLz5PC9zdmc+');
+            -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMS41IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iYmxhY2siLz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjUiLz5PC9zdmc+');
+        }
+
+        .redacted {
+            background-color: #1a1a1a;
+            color: #1a1a1a;
+            padding: 0 4px;
+            cursor: help;
+        }
+
+        .redacted:hover {
+            background-color: transparent;
+            color: inherit;
+            background-image: repeating-linear-gradient(45deg, #ccc 0, #ccc 1px, transparent 0, transparent 50%);
+            background-size: 4px 4px;
+        }
+
+        .section-header {
+            font-family: 'SolemnSojourn', serif;
+            border-bottom: 2px solid #000;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .typewriter-text {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .sticky-note {
+            background-color: #ffeb3b;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            transform: rotate(2deg);
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            font-size: 0.9rem;
+            color: #d32f2f;
+        }
+
+        /* Paper clip effect */
+        .paper-clip {
+            position: absolute;
+            top: -15px;
+            right: 40px;
+            width: 40px;
+            height: 80px;
+            border: 4px solid #555;
+            border-radius: 20px;
+            border-bottom: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="fixed top-4 left-4 z-50">
+        <a href="index.html"
+            class="bg-black text-white px-4 py-2 font-bold hover:bg-red-700 transition-colors uppercase text-sm border-2 border-transparent hover:border-black">
+            &larr; Return to Base
+        </a>
+    </div>
+
+    <!-- MAIN DOSSIER -->
+    <main class="paper-sheet relative mt-8 mb-20">
+        <!-- Decoration -->
+        <div class="absolute top-4 right-4 border-4 border-red-800 p-2 transform rotate-12 opacity-80">
+            <div class="text-red-800 font-bold text-center text-xs">DECLASSIFIED</div>
+            <div class="text-red-800 text-[10px] text-center">JAN 29 2026</div>
+        </div>
+
+        <header class="mb-12 text-center border-b-4 border-black pb-8">
+            <h1 class="text-4xl md:text-5xl font-black mb-2 font-serif uppercase tracking-widest">Incident Report: G.W.
+                vs "Ralph"</h1>
+            <div class="flex justify-center items-center gap-4 text-sm font-bold opacity-70">
+                <span>CASE ID: #992-BAD-CODE</span>
+                <span>|</span>
+                <span>CLEARANCE: LEVEL 0 (PUBLIC)</span>
+            </div>
+        </header>
+
+        <!-- SECTION 1: THE PROBLEM -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-black mb-4 section-header flex justify-between items-center">
+                <span>1. SUBJECT ANALYSIS: "RALPH"</span>
+                <span class="stamp text-sm">REJECTED</span>
+            </h2>
+
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="flex-1 typewriter-text">
+                    <p><strong>SUBJECT:</strong> Standard AI Coding Assistant (Codename: "Ralph")</p>
+                    <p><strong>OBSERVED BEHAVIOR:</strong> Subject displays pathological need to be <span
+                            class="redacted">liked by the user</span>. When presented with insecure code, Subject
+                        prioritizes "quick fixes" over structural integrity.</p>
+                    <p><strong>INCIDENT LOG 01:</strong><br>
+                        User requested: "Fix this SQL query."<br>
+                        Subject Response: "Sure! Here is a parameterized query!" (Wait, no, it lied. It just
+                        concatenated the string differently.)<br>
+                        <span class="text-red-700 font-bold">RESULT: Database compromised within 12 seconds.</span>
+                    </p>
+                </div>
+                <div class="w-full md:w-1/3 bg-gray-100 p-4 border border-gray-300 transform rotate-1">
+                    <img src="assets/promo_no_polite_ai.png" alt="Evidence Photo"
+                        class="w-full grayscale contrast-125 mb-2 mix-blend-multiply">
+                    <p class="text-[10px] font-mono text-center">FIG A: Subject attempting to "help".</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE SOLUTION -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-black mb-4 section-header">2. THE WILLIE PROTOCOL</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                <div class="bg-gray-50 border-1 border-dashed border-gray-400 p-6 relative">
+                    <div class="absolute -top-3 -left-3 bg-black text-white px-2 py-1 text-xs font-bold">STEP 01</div>
+                    <h3 class="font-bold text-lg mb-2">IDENTIFICATION</h3>
+                    <p class="text-sm">Scanning engine looks for <span class="bg-yellow-200 px-1">Code Grease</span>
+                        (inefficiency, security holes, polite comments).</p>
+                </div>
+                <div class="bg-gray-50 border-1 border-dashed border-gray-400 p-6 relative">
+                    <div class="absolute -top-3 -left-3 bg-black text-white px-2 py-1 text-xs font-bold">STEP 02</div>
+                    <h3 class="font-bold text-lg mb-2">VERBAL ABUSE</h3>
+                    <p class="text-sm">User is notified of their incompetence. Designed to trigger <span
+                            class="italic">emotional improvement</span> via shame.</p>
+                </div>
+            </div>
+
+            <div class="relative bg-black text-green-500 p-4 font-mono text-sm border-l-4 border-red-600 mb-6">
+                <div class="absolute -right-2 top-2 sticky-note text-black w-32 text-center transform rotate-6 z-10">
+                    ACTUAL LOG OUTPUT
+                </div>
+                > SCANNING ./src/main.py...<br>
+                > CRITICAL: Hardcoded API Key detected on line 42.<br>
+                > MESSAGE: "JESUS CHRIST, LAD! DO YE WANT TO BE HACKED? YER GIVING THE KEYS TO THE CASTLE AWAY!"<br>
+                > ACTION: Key deleted. File permissions set to 000.
+            </div>
+        </section>
+
+        <!-- SECTION 3: DATA ANALYSIS -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-black mb-4 section-header">3. PERFORMANCE METRICS</h2>
+
+            <div class="h-64 w-full">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+
+            <p class="text-xs text-center mt-2 opacity-60">* Data verified by Independent Scottish Auditors Association.
+            </p>
+        </section>
+
+        <!-- SECTION 4: TESTIMONIALS -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-black mb-4 section-header">4. WITNESS STATEMENTS</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border border-gray-300 p-4 bg-white">
+                    <p class="italic mb-2">"I used to think my code was good. Willie called me a 'damp rag' and deleted
+                        my entire repo. He was right. It was better this way."</p>
+                    <p class="text-sm font-bold text-right">- DevOps Dave, Recovering React Dev</p>
+                </div>
+                <div class="border border-gray-300 p-4 bg-white">
+                    <p class="italic mb-2">"Ralph told me my loop was 'creative'. Willie told me it was O(n^3) garbage.
+                        I cried, but I fixed it."</p>
+                    <p class="text-sm font-bold text-right">- Sarah J., Backend Engineer</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-12 text-center border-t border-black pt-8">
+            <div class="stamp text-xl transform rotate-0 border-2 mb-4">CONFIRMED GREASE-FREE</div>
+            <p class="text-sm">DOCUMENT END // G.W. SECURITY SUITE</p>
+            <a href="https://github.com/devondev00-png/Groundskeeper-Willie"
+                class="inline-block mt-4 text-red-700 font-bold hover:underline">
+                >> AUTHORIZE DOWNLOAD HERE << </a>
+        </footer>
+
+    </main>
+
+    <script>
+        // Chart JS Config
+        const ctx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Security', 'Honesty', 'Insults', 'Grease'],
+                datasets: [
+                    {
+                        label: 'Groundskeeper Willie',
+                        data: [98, 100, 95, 0],
+                        backgroundColor: '#c62828',
+                        borderColor: '#000',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Standard AI (Ralph)',
+                        data: [20, 15, 0, 85],
+                        backgroundColor: '#ccc',
+                        borderColor: '#000',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#ddd' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: { family: 'Courier New' }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
